@@ -31,8 +31,8 @@ test('should render plain children', () => {
 });
 
 test('should render as element', () => {
-  const { container } = render(<InView as="span">inner</InView>);
-  const tagName = container.children[0].tagName.toLowerCase();
+  render(<InView as="span">inner</InView>);
+  const tagName = screen.getByText('inner').tagName.toLowerCase();
   expect(tagName).toBe('span');
 });
 
@@ -144,7 +144,7 @@ test('Should unobserve when unmounted', () => {
 
 test('plain children should not catch bubbling onChange event', () => {
   const onChange = vi.fn();
-  const { getByLabelText } = render(
+  render(
     <InView onChange={onChange}>
       <label>
         <input name="field" />
@@ -152,7 +152,7 @@ test('plain children should not catch bubbling onChange event', () => {
       </label>
     </InView>,
   );
-  const input = getByLabelText('input');
+  const input = screen.getByLabelText('input');
   fireEvent.change(input, { target: { value: 'changed value' } });
   expect(onChange).not.toHaveBeenCalled();
 });

@@ -39,36 +39,34 @@ const LazyHookComponent = ({ options }: { options?: IntersectionOptions }) => {
 };
 
 test('should create a hook', () => {
-  const { getByTestId } = render(<HookComponent />);
-  const wrapper = getByTestId('wrapper');
+  render(<HookComponent />);
+  const wrapper = screen.getByTestId('wrapper');
   const instance = intersectionMockInstance(wrapper);
 
   expect(instance.observe).toHaveBeenCalledWith(wrapper);
 });
 
 test('should create a hook with array threshold', () => {
-  const { getByTestId } = render(
-    <HookComponent options={{ threshold: [0.1, 1] }} />,
-  );
-  const wrapper = getByTestId('wrapper');
+  render(<HookComponent options={{ threshold: [0.1, 1] }} />);
+  const wrapper = screen.getByTestId('wrapper');
   const instance = intersectionMockInstance(wrapper);
 
   expect(instance.observe).toHaveBeenCalledWith(wrapper);
 });
 
 test('should create a lazy hook', () => {
-  const { getByTestId } = render(<LazyHookComponent />);
-  const wrapper = getByTestId('wrapper');
+  render(<LazyHookComponent />);
+  const wrapper = screen.getByTestId('wrapper');
   const instance = intersectionMockInstance(wrapper);
 
   expect(instance.observe).toHaveBeenCalledWith(wrapper);
 });
 
 test('should create a hook inView', () => {
-  const { getByText } = render(<HookComponent />);
+  render(<HookComponent />);
   mockAllIsIntersecting(true);
 
-  getByText('true');
+  screen.getByText('true');
 });
 
 test('should mock thresholds', () => {
@@ -82,29 +80,25 @@ test('should mock thresholds', () => {
 });
 
 test('should create a hook with initialInView', () => {
-  const { getByText } = render(
-    <HookComponent options={{ initialInView: true }} />,
-  );
-  getByText('true');
+  render(<HookComponent options={{ initialInView: true }} />);
+  screen.getByText('true');
   mockAllIsIntersecting(false);
-  getByText('false');
+  screen.getByText('false');
 });
 
 test('should trigger a hook leaving view', () => {
-  const { getByText } = render(<HookComponent />);
+  render(<HookComponent />);
   mockAllIsIntersecting(true);
   mockAllIsIntersecting(false);
-  getByText('false');
+  screen.getByText('false');
 });
 
 test('should respect trigger once', () => {
-  const { getByText } = render(
-    <HookComponent options={{ triggerOnce: true }} />,
-  );
+  render(<HookComponent options={{ triggerOnce: true }} />);
   mockAllIsIntersecting(true);
   mockAllIsIntersecting(false);
 
-  getByText('true');
+  screen.getByText('true');
 });
 
 test('should trigger onChange', () => {
@@ -125,41 +119,37 @@ test('should trigger onChange', () => {
 });
 
 test('should respect skip', () => {
-  const { getByText, rerender } = render(
-    <HookComponent options={{ skip: true }} />,
-  );
+  const { rerender } = render(<HookComponent options={{ skip: true }} />);
   mockAllIsIntersecting(false);
-  getByText('false');
+  screen.getByText('false');
 
   rerender(<HookComponent options={{ skip: false }} />);
   mockAllIsIntersecting(true);
-  getByText('true');
+  screen.getByText('true');
 });
 
 test('should not reset current state if changing skip', () => {
-  const { getByText, rerender } = render(
-    <HookComponent options={{ skip: false }} />,
-  );
+  const { rerender } = render(<HookComponent options={{ skip: false }} />);
   mockAllIsIntersecting(true);
   rerender(<HookComponent options={{ skip: true }} />);
-  getByText('true');
+  screen.getByText('true');
 });
 
 test('should unmount the hook', () => {
-  const { unmount, getByTestId } = render(<HookComponent />);
-  const wrapper = getByTestId('wrapper');
+  const { unmount } = render(<HookComponent />);
+  const wrapper = screen.getByTestId('wrapper');
   const instance = intersectionMockInstance(wrapper);
   unmount();
   expect(instance.unobserve).toHaveBeenCalledWith(wrapper);
 });
 
 test('inView should be false when component is unmounted', () => {
-  const { rerender, getByText } = render(<HookComponent />);
+  const { rerender } = render(<HookComponent />);
   mockAllIsIntersecting(true);
 
-  getByText('true');
+  screen.getByText('true');
   rerender(<HookComponent unmount />);
-  getByText('false');
+  screen.getByText('false');
 });
 
 test('should handle trackVisibility', () => {
@@ -201,11 +191,11 @@ const SwitchHookComponent = ({
  * This is a test for the case where people move the ref around (please don't)
  */
 test('should handle ref removed', () => {
-  const { rerender, getByTestId } = render(<SwitchHookComponent />);
+  const { rerender } = render(<SwitchHookComponent />);
   mockAllIsIntersecting(true);
 
-  const item1 = getByTestId('item-1');
-  const item2 = getByTestId('item-2');
+  const item1 = screen.getByTestId('item-1');
+  const item2 = screen.getByTestId('item-2');
 
   // Item1 should be inView
   expect(item1.getAttribute('data-inview')).toBe('true');
@@ -244,11 +234,11 @@ const MergeRefsComponent = ({ options }: { options?: IntersectionOptions }) => {
 };
 
 test('should handle ref merged', () => {
-  const { rerender, getByTestId } = render(<MergeRefsComponent />);
+  const { rerender } = render(<MergeRefsComponent />);
   mockAllIsIntersecting(true);
   rerender(<MergeRefsComponent />);
 
-  expect(getByTestId('inview').getAttribute('data-inview')).toBe('true');
+  expect(screen.getByTestId('inview').getAttribute('data-inview')).toBe('true');
 });
 
 const MultipleHookComponent = ({
@@ -285,13 +275,11 @@ const MultipleHookComponent = ({
 };
 
 test('should handle multiple hooks on the same element', () => {
-  const { getByTestId } = render(
-    <MultipleHookComponent options={{ threshold: 0.1 }} />,
-  );
+  render(<MultipleHookComponent options={{ threshold: 0.1 }} />);
   mockAllIsIntersecting(true);
-  expect(getByTestId('item-1').getAttribute('data-inview')).toBe('true');
-  expect(getByTestId('item-2').getAttribute('data-inview')).toBe('true');
-  expect(getByTestId('item-3').getAttribute('data-inview')).toBe('true');
+  expect(screen.getByTestId('item-1').getAttribute('data-inview')).toBe('true');
+  expect(screen.getByTestId('item-2').getAttribute('data-inview')).toBe('true');
+  expect(screen.getByTestId('item-3').getAttribute('data-inview')).toBe('true');
 });
 
 test('should handle thresholds missing on observer instance', () => {
