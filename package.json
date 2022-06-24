@@ -136,7 +136,7 @@
     "@types/react-dom": "^18.0.5",
     "autoprefixer": "^10.4.7",
     "eslint": "^8.18.0",
-    "eslint-config-charlie-tango": "^1.1.0",
+    "eslint-config-charlie-tango": "^1.1.2",
     "framer-motion": "^6.3.13",
     "intersection-observer": "^0.12.2",
     "jsdom": "^20.0.0",

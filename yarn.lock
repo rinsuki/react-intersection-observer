@@ -6495,10 +6495,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-charlie-tango@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-charlie-tango/-/eslint-config-charlie-tango-1.1.0.tgz#e3f4aae39eb665affc906fb2481f617be937845e"
-  integrity sha512-DVuu7/T4Vxe5IAg8jHIBHLPh3/wjQiJGX37d4aEXchNL9nnOAp+gIiDoLccA1hrs2/hxsAvfQwpcXf/VABOuFA==
+eslint-config-charlie-tango@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-charlie-tango/-/eslint-config-charlie-tango-1.1.2.tgz#6a459fb432a634b2e9bf769481e6fb4c809f1ad1"
+  integrity sha512-ESuzqIDMVpvzvQTl7WPxVJNBxcytp9JGFdz5U2uR5qO/sQW+3ymQxdpFMM7F43XShhEiMMVruWdtMB+UQp/1Lg==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.29.0"
     "@typescript-eslint/parser" "^5.29.0"
