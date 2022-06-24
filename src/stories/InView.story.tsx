@@ -152,7 +152,7 @@ WithRootAndRootMargin.args = {
   threshold: 0,
 };
 
-export const multipleObservers = () => (
+export const MultipleObservers = () => (
   <ScrollWrapper>
     <InView threshold={0.25}>
       {({ ref, inView, entry }) => (
